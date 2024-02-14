@@ -17,6 +17,14 @@ HarmonyOS开发应用从入门到实战
 
 ![](images/image-20240124191155279.png)
 
+
+
+> 安卓
+>
+> GMS（谷歌移动服务），   收费的部分。【对应华为HMS Core】
+>
+> AOSP（Android Open Source Project，Android 开放源代码项目）
+
 ### 鸿蒙开发用语言
 
 两种开发方向：
@@ -352,3 +360,243 @@ base目录相当于一个默认目录
 
 
 ## 6 渲染控制
+
+`ForEach`
+
+![](images/image-20240202151329305.png)
+
+![](images/image-20240202151545896.png)
+
+`if else`
+
+![](images/image-20240202155021998.png)
+
+
+
+![](images/image-20240202155700194.png)
+
+## 7 列表布局
+
+多个Row布局不支持滚动效果
+
+列表（List）是一种复杂容器，具备下列特点：
+
+1. 列表项（ListItem）数量过多超出屏幕后，会自动提供滚动功能
+2. 列表项（ListItem）既可以纵向排列，也可以横向排列
+
+![](images/image-20240202160257611.png)
+
+注意：`ListItem`不是容器。List中只能有ListItem，而且ListItem中只有一个容器。
+
+![](images/image-20240202160439964.png)
+
+## 8 自定义组件
+
+### 自定义组件
+
+![](images/image-20240202161611530.png)
+
+
+
+
+
+### 自定义构建函数
+
+可以定义子啊全局或组件内
+
+```typescript
+// 全局自定义构建函数
+@Builder function ItemCard(item: Item) {
+  // ...
+}
+
+@Entry
+@Component
+struct ItemPage {
+  // ...
+              ItemCard(item)
+  // ...
+  }
+}
+```
+
+```typescript
+@Entry
+@Component
+struct ItemPage {
+  // ...
+              this.ItemCard(item)
+  // ...
+
+  // 局部自定义构建函数
+  @Builder  ItemCard(item: Item) {
+  // ...
+  }
+}
+```
+
+
+
+### 公共样式函数
+
+`@Styles`装饰器，仅可以封装组件通用属性
+
+```typescript
+// 全局公共样式函数
+@Styles function fillScreen() {
+  .width('100%')
+  .height('100%')
+  .padding(20)
+  .backgroundColor('#EFEFEF')
+}
+
+@Entry
+@Component
+struct ItemPage {
+
+  build() {
+    Column({space: 8}) {
+
+    }
+    .fillScreen()
+  }
+}
+```
+
+```typescript
+@Entry
+@Component
+struct ItemPage {
+  build() {
+    Column({space: 8}) {
+
+    }
+    .fillScreen()
+  }
+  
+  // 局部公共样式函数
+  @Styles fillScreen() {
+  }
+}
+```
+
+`@Extend`可以用来配置组件特有属性，但必须定义在全局
+
+```typescript
+// 样式的继承模式。只能是全局
+@Extend(Text) function priceText() {
+  .fontSize(18)
+  .fontColor('#F36')
+}
+```
+
+## 9 状态管理
+
+### @State
+
+在声明式UI中，是以状态驱动视图更新：
+
+![](images/image-20240202182010500.png)
+
+- 状态（State）：指驱动视图更新的数据（被装饰器标记的变量）
+- ﻿﻿视图（View）：基于UI描述渲染得到用户界面
+
+![](images/image-20240202182045609.png)
+
+> 说明
+>
+> - @State装饰器标记的变量必须初始化，不能为空值。
+> - @State支持Object、class、string、number、boolean、enum类型以及这些类型的数组。
+> - 嵌套类型以及数组中的对象属性无法触发视图更新。但数组的对象添加、删除、重新赋值会触发试图更新。
+
+### 任务统计案例
+
+![](images/image-20240202194702075.png)
+
+### 数据同步
+
+当父子组件之间需要数据同步是，可以使用`@Prop`和`@Link`装饰器：
+
+![](images/image-20240203082852404.png)
+
+![](images/image-20240203082926143.png)
+
+@Prop单向传递是复制，@Link双向传递是传递引用，操作是统一变量。
+
+![](images/image-20240209105612546.png)
+
+![](images/image-20240209105632776.png)
+
+
+
+
+
+![](images/image-20240209110647457.png)
+
+
+
+@Provide和Consume可以**跨组件**提供类似于@State和@Link的双向同步。
+
+P16 24:00
+
+### @Observed和@ObjectLink
+
+
+
+## 10 页面路由
+
+
+
+## 11 动画
+
+
+
+### 属性动画
+
+
+
+### 显式动画
+
+
+
+### 组件转场动画
+
+
+
+## 12 Stage模型
+
+
+
+## 13 网络连接
+
+### Http数据请求
+
+
+
+### 第三方库axios
+
+
+
+## 14 数据持久化
+
+### 用户首选项
+
+
+
+### 关系型数据库
+
+
+
+## 15 通知
+
+基础通知
+
+进度条通知
+
+通知意图
+
+
+
+## 16 实战案例
+
+健康
